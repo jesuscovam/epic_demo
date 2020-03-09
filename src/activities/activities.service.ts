@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { ActivitiesRepository } from './activities.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateActivyDto } from './dtos/createActivity.dto';
@@ -12,5 +12,14 @@ export class ActivitiesService {
     
     createActivity(createActivityDto: CreateActivyDto): Promise<Activity>{
         return this.activitiesRepository.createActivity(createActivityDto)
+    }
+
+    async getActivityById(id: number): Promise<Activity>{
+        const found = await this.activitiesRepository.findOne(id)
+        if(!found){
+            throw new BadRequestException(`${id} is an invalid id`)
+        } else {
+            return found
+        }
     }
 }
