@@ -1,14 +1,14 @@
 import { Repository, EntityRepository } from "typeorm";
 import { User } from "./user.entity";
-import { CreateUserDto } from "./dtos/createUser.dto";
+import { AuthCredentials } from "./dtos/createUser.dto";
 import * as bcrypt from 'bcrypt'
 import { UnauthorizedException } from "@nestjs/common";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User>{
     
-    async signUp(createUserDto: CreateUserDto): Promise<User>{
-        const { username, password } = createUserDto
+    async signUp(authCredentials: AuthCredentials): Promise<User>{
+        const { username, password } = authCredentials
         const user = new User()
         
         user.username = username
