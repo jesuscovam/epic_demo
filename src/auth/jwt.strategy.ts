@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { UserRepository } from './user.repository'
 import { JwtPayload } from './jwt.payload.interface'
 import { UnauthorizedException } from '@nestjs/common'
-import { User } from './user.entity'
+
 
 export class JwtStrategy extends PassportStrategy(Strategy){
     constructor(
@@ -17,9 +17,9 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         })
     }
 
-    async validate(payload: JwtPayload): Promise<User>{
+    async validate(payload: JwtPayload){
         const { username } = payload 
-        const user = await this.userRepository.findOne(username)
+        const user = await this.userRepository.findOne({username})
 
         if(!user){
             throw new UnauthorizedException('Invalid credentials')
