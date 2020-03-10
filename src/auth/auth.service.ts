@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 import {  AuthCredentials } from './dtos/createUser.dto';
 import { User } from './user.entity';
+import { JwtPayload } from './jwt.payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -16,11 +17,11 @@ export class AuthService {
     }
 
     async validation(authCredentials: AuthCredentials){
-        const user = await this.userRepository.validation(authCredentials)
-        if(Object.is(user, null)){
+        const username = await this.userRepository.validation(authCredentials)
+        if(Object.is(username, null)){
             throw new UnauthorizedException(`Invalid credentials`)
         } else {
-            
+            const payload: JwtPayload = username
         }
     }
 }
