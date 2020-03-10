@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateActivyDto } from './dtos/createActivity.dto';
 import { Activity } from './activity.entity';
 import { GetActivitiesFilteredDto } from './dtos/getActivitiesFiltered.dto';
+import { ActivityType } from './activityType.enum';
 
 @Injectable()
 export class ActivitiesService {
@@ -31,5 +32,12 @@ export class ActivitiesService {
 
     getActivities(getActivitiesFilteredDto: GetActivitiesFilteredDto): Promise<Activity []>{
         return this.activitiesRepository.getActivities(getActivitiesFilteredDto)
+    }
+
+    async updateActivity(id: number, type: ActivityType): Promise<Activity>{
+        const activity = await this.getActivityById(id)
+        activity.type = type
+        await activity.save()
+        return activity
     }
 }

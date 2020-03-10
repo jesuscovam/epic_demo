@@ -1,8 +1,10 @@
-import { Controller, Post, Body, Get, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete, Query, Patch } from '@nestjs/common';
 import { ActivitiesService } from './activities.service';
 import { CreateActivyDto } from './dtos/createActivity.dto';
 import { Activity } from './activity.entity';
 import { GetActivitiesFilteredDto } from './dtos/getActivitiesFiltered.dto';
+import { ActivityType } from './activityType.enum';
+import { TypeValidatorPipe } from './pipes/type.validator.pipe';
 
 @Controller('activities')
 export class ActivitiesController {
@@ -26,6 +28,14 @@ export class ActivitiesController {
     @Delete('/:id')
     deleteById(@Param('id') id: number): Promise<void>{
         return this.activitiesService.deleteById(id)
+    }
+
+    @Patch('/:id')
+    updateActivity(
+        @Param('id') id: number,
+        @Body('type', TypeValidatorPipe) type: ActivityType
+    ): Promise<Activity>{
+        return this.activitiesService.updateActivity(id, type)
     }
 
 }
