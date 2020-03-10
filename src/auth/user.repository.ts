@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt'
 @EntityRepository(User)
 export class UserRepository extends Repository<User>{
     
-    async createUser(createUserDto: CreateUserDto): Promise<User>{
+    async signUp(createUserDto: CreateUserDto): Promise<User>{
         const { username, password } = createUserDto
         const user = new User()
         

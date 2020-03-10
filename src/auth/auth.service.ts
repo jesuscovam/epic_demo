@@ -11,7 +11,7 @@ export class AuthService {
         private userRepository: UserRepository
     ){}
 
-    createUser(createUserDto: CreateUserDto): Promise<User>{
-        return this.userRepository.createUser(createUserDto)
+    signUp(createUserDto: CreateUserDto): Promise<User>{
+        return this.userRepository.signUp(createUserDto)
     }
 }
