@@ -31,7 +31,7 @@ export class UserRepository extends Repository<User>{
         const user = await this.findOne(username)
 
         if(!user.validatePassword(password)){
-            throw new UnauthorizedException(`Invalid credentials`)
+            return null
         } else{
             return user
         }
