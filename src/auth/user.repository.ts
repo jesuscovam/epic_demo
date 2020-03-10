@@ -13,7 +13,7 @@ export class UserRepository extends Repository<User>{
         
         user.username = username
         user.salt = await bcrypt.genSalt()
-        user.password = await this.hashPassword(password, user.salt)
+        user.password = await bcrypt.hash(password, user.salt)
 
         try {
             await user.save()
@@ -35,9 +35,5 @@ export class UserRepository extends Repository<User>{
         } else{
             return user
         }
-    }
-
-    private async hashPassword(password: string, salt: string){
-        return await bcrypt.hash(password, salt)
     }
 }
