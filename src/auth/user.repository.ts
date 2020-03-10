@@ -26,10 +26,15 @@ export class UserRepository extends Repository<User>{
         
     }
 
-    async validation(authCredentials: AuthCredentials){
+    async validation(authCredentials: AuthCredentials): Promise<User>{
         const { username, password } = authCredentials
         const user = await this.findOne(username)
-        
+
+        if(!user.validatePassword(password)){
+            throw new UnauthorizedException(`Invalid credentials`)
+        } else{
+            return user
+        }
     }
 
     private async hashPassword(password: string, salt: string){
