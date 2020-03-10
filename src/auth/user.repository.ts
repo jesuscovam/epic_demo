@@ -26,6 +26,12 @@ export class UserRepository extends Repository<User>{
         
     }
 
+    async validation(authCredentials: AuthCredentials){
+        const { username, password } = authCredentials
+        const user = await this.findOne(username)
+        
+    }
+
     private async hashPassword(password: string, salt: string){
         return await bcrypt.hash(password, salt)
     }
