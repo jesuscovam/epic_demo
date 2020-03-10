@@ -21,7 +21,7 @@ export class AuthService {
         if(Object.is(username, null)){
             throw new UnauthorizedException(`Invalid credentials`)
         } else {
-            const payload: JwtPayload = username
+            const payload: JwtPayload =  { username }
         }
     }
 }
