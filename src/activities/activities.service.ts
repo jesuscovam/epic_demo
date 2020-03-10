@@ -3,6 +3,7 @@ import { ActivitiesRepository } from './activities.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateActivyDto } from './dtos/createActivity.dto';
 import { Activity } from './activity.entity';
+import { GetActivitiesFilteredDto } from './dtos/getActivitiesFiltered.dto';
 
 @Injectable()
 export class ActivitiesService {
@@ -21,5 +22,14 @@ export class ActivitiesService {
         } else {
             return found
         }
+    }
+
+    async deleteById(id: number): Promise<void>{
+        const activity = await this.getActivityById(id)
+        await this.activitiesRepository.delete(activity)
+    }
+
+    getActivities(getActivitiesFilteredDto: GetActivitiesFilteredDto): Promise<Activity []>{
+        return this.activitiesRepository.getActivities(getActivitiesFilteredDto)
     }
 }

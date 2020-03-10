@@ -1,7 +1,8 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete, Query } from '@nestjs/common';
 import { ActivitiesService } from './activities.service';
 import { CreateActivyDto } from './dtos/createActivity.dto';
 import { Activity } from './activity.entity';
+import { GetActivitiesFilteredDto } from './dtos/getActivitiesFiltered.dto';
 
 @Controller('activities')
 export class ActivitiesController {
@@ -16,4 +17,15 @@ export class ActivitiesController {
     getActivityById(@Param('id') id: number): Promise<Activity>{
         return this.activitiesService.getActivityById(id)
     }
+
+    @Get()
+    getActivities(@Query() getActivitiesFiltered: GetActivitiesFilteredDto): Promise<Activity []>{
+        return this.activitiesService.getActivities(getActivitiesFiltered)
+    }
+
+    @Delete('/:id')
+    deleteById(@Param('id') id: number): Promise<void>{
+        return this.activitiesService.deleteById(id)
+    }
+
 }
