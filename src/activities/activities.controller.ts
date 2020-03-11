@@ -1,12 +1,14 @@
-import { Controller, Post, Body, Get, Param, Delete, Query, Patch } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete, Query, Patch, UseGuards } from '@nestjs/common';
 import { ActivitiesService } from './activities.service';
 import { CreateActivyDto } from './dtos/createActivity.dto';
 import { Activity } from './activity.entity';
 import { GetActivitiesFilteredDto } from './dtos/getActivitiesFiltered.dto';
 import { ActivityType } from './activityType.enum';
 import { TypeValidatorPipe } from './pipes/type.validator.pipe';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('activities')
+@UseGuards(AuthGuard())
 export class ActivitiesController {
     constructor(private activitiesService: ActivitiesService){}
 
